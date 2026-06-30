@@ -2,9 +2,11 @@ import { ActivityIndicator, FlatList, StyleSheet, Text, TouchableOpacity, View }
 import ArticleItem from "./components/ArticleItem";
 import { Post } from "../../data/api";
 import { useHomeViewModel } from "./useHomeViewModel";
+import { useBookmarks } from "./useBookmarks";
 
 function HomeScreen({navigation}: any) {
   const {posts, loading, error, retry} = useHomeViewModel();
+  const {isBookmarked, toggleBookmark} = useBookmarks();
 
   const renderItem = ({ item }: { item: Post }) => (
     <ArticleItem
@@ -17,6 +19,8 @@ function HomeScreen({navigation}: any) {
       onPress={() =>
         navigation.navigate('Detail', { itemId: item.id, itemName: item.title })
       }
+      isBookmarked={isBookmarked(String(item.id))}
+      onToggleBookmark={() => toggleBookmark(String(item.id))}
     />
   );
 

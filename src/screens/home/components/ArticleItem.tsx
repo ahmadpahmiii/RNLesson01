@@ -1,18 +1,30 @@
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Article } from "../../../data/articles"
 
 type Props = {
   article: Article;
   onPress: () => void;
+  isBookmarked: boolean;
+  onToggleBookmark: () => void;
 };
 
-function ArticleItem({article, onPress}: Props) {
+function ArticleItem({article, onPress, isBookmarked, onToggleBookmark}: Props) {
     return (
-        <TouchableOpacity style= {styles.card} onPress={onPress}>
+      <TouchableOpacity style={styles.card} onPress={onPress}>
+        <View style={styles.row}>
+          <View style={styles.textContainer}>
             <Text style={styles.title}>{article.title}</Text>
             <Text style={styles.meta}>{article.author} • {article.readTime}</Text>
-        </TouchableOpacity>
-    )
+          </View>
+          <TouchableOpacity
+            onPress={onToggleBookmark}
+            hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+          >
+            <Text style={styles.star}>{isBookmarked ? '⭐' : '☆'}</Text>
+          </TouchableOpacity>
+        </View>
+      </TouchableOpacity>
+    );
 }
 
 const styles = StyleSheet.create({
@@ -28,6 +40,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.08,
     shadowRadius: 4,
   },
+  row: {flexDirection : 'row', justifyContent: 'space-between', alignItems: 'center'},
+  textContainer: {flex: 1, marginRight: 12},
   title: {
     fontSize: 16,
     fontWeight: '600',
@@ -38,6 +52,7 @@ const styles = StyleSheet.create({
     color: '#888888',
     marginTop: 4,
   },
+  star: {fontSize: 22}
 });
 
 export default ArticleItem;

@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 import { fetchPosts, Post } from "../../data/api";
 
 export function useHomeViewModel() {
- const [posts, setPosts] = useState<Post[]>([]);
+  const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {loadPosts();}, [])
+  useEffect(() => { loadPosts(); }, [])
 
   async function loadPosts() {
     try {
@@ -21,5 +21,5 @@ export function useHomeViewModel() {
     }
   }
 
-  return {posts, loading, error, retry: loadPosts}
+  return { posts, loading, error, retry: loadPosts }
 }
